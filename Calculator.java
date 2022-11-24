@@ -6,7 +6,6 @@ public class Calculator implements ActionListener {
     JFrame frame;
     JTextField textField;
     JButton[] nubmerButtons;
-
     JButton[] functionButtons;
     JButton addButton;
     JButton subButton;
@@ -22,11 +21,18 @@ public class Calculator implements ActionListener {
 
     Font myFont = new Font("TimesRoman", Font.BOLD, 30);
 
+    double result = 0;
+    double num1 = 0;
+    double num2 = 0;
+    char operator;
+
     public Calculator() {
         frame = new JFrame("My calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// чтобы мы могли его закрыть
+        Dimension frameDimension = new Dimension(500, 500); //расширение
+        frame.setResizable(false);
         frame.setSize(500, 500);
-        frame.setLayout(null); // созание макета контейнера, если null то он пустой, если он пустой, то релентно устанавливать границы (bounders), размеры и тд
+        frame.setLayout(null); // создание макета контейнера, если null то он пустой, если он пустой, то релентно устанавливать границы (bounders), размеры и тд
 
         textField = new JTextField();
         textField.setBounds(50, 25, 300, 50);
@@ -108,208 +114,71 @@ public class Calculator implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        boolean firstPartOfNumber = false;
-        boolean firstNumber = false;
-        String number1 = "";
-        String number2 = "";
-        double result = 0;
-        double number01;
-        double number02;
-
-        if (e.getSource() == nubmerButtons[1]) {
-            if (firstPartOfNumber && firstNumber) {
-                textField.setText("1");
-                firstNumber = true;
-            } else if (!firstPartOfNumber && firstNumber) {
-                number1 = textField.getText();
-                number1 = number1 + "1";
-                textField.setText(number1);
-            } else if (firstPartOfNumber && !firstNumber) {
-                textField.setText("1");
-                firstNumber = false;
-            } else if (!firstPartOfNumber && !firstNumber) {
-                number2 = textField.getText();
-                number2 = number2 + "1";
-                textField.setText(number2);
+        for (int i = 0; i < 10; i++) {
+            if (e.getSource() == nubmerButtons[i]) {
+                //textField.setText(textField.getText().concat(String.valueOf(i)));
+                textField.setText(textField.getText() + i);
             }
+        }
+        if(e.getSource() == negButton){
+           // double myDec = Double.parseDouble(textField.getText());
+           // myDec = myDec * (-1.0);
+           // textField.setText(String.valueOf(myDec));
+            if(textField.getText().length() != 0 && textField.getText().charAt(0) == '-'){
+                textField.setText(textField.getText().substring(1));
+            }
+            else{
+                textField.setText("-" + textField.getText());
+            }
+            }
+
+        if(e.getSource() == decButton && textField.getText().length() != 0 && !textField.getText().contains(".")){
+            textField.setText(textField.getText() + ".");
         }
 
-        if (e.getSource() == nubmerButtons[2]) {
-            if (firstPartOfNumber && firstNumber) {
-                textField.setText("2");
-                firstNumber = true;
-            } else if (!firstPartOfNumber && firstNumber) {
-                number1 = textField.getText();
-                number1 = number1 + "2";
-                textField.setText(number1);
-            } else if (firstPartOfNumber && !firstNumber) {
-                textField.setText("2");
-                firstNumber = false;
-            } else if (!firstPartOfNumber && !firstNumber) {
-                number2 = textField.getText();
-                number2 = number2 + "2";
-                textField.setText(number2);
-            }
+        if(e.getSource() == addButton){
+            num1 = Double.parseDouble(textField.getText());
+            operator = '+';
+            textField.setText("");
         }
-
-        if (e.getSource() == nubmerButtons[3]) {
-            if (firstPartOfNumber && firstNumber) {
-                textField.setText("3");
-                firstNumber = true;
-            } else if (!firstPartOfNumber && firstNumber) {
-                number1 = textField.getText();
-                number1 = number1 + "3";
-                textField.setText(number1);
-            } else if (firstPartOfNumber && !firstNumber) {
-                textField.setText("3");
-                firstNumber = false;
-            } else if (!firstPartOfNumber && !firstNumber) {
-                number2 = textField.getText();
-                number2 = number2 + "3";
-                textField.setText(number2);
-            }
+        if(e.getSource() == subButton){
+            num1 = Double.parseDouble(textField.getText());
+            operator = '-';
+            textField.setText("");
         }
-
-        if (e.getSource() == nubmerButtons[4]) {
-            if (firstPartOfNumber && firstNumber) {
-                textField.setText("4");
-                firstNumber = true;
-            } else if (!firstPartOfNumber && firstNumber) {
-                number1 = textField.getText();
-                number1 = number1 + "4";
-                textField.setText(number1);
-            } else if (firstPartOfNumber && !firstNumber) {
-                textField.setText("4");
-                firstNumber = false;
-            } else if (!firstPartOfNumber && !firstNumber) {
-                number2 = textField.getText();
-                number2 = number2 + "4";
-                textField.setText(number2);
-            }
+        if(e.getSource() == mulButton){
+            num1 = Double.parseDouble(textField.getText());
+            operator = '*';
+            textField.setText("");
         }
-        if (e.getSource() == nubmerButtons[5]) {
-            if (firstPartOfNumber && firstNumber) {
-                textField.setText("5");
-                firstNumber = true;
-            } else if (!firstPartOfNumber && firstNumber) {
-                number1 = textField.getText();
-                number1 = number1 + "5";
-                textField.setText(number1);
-            } else if (firstPartOfNumber && !firstNumber) {
-                textField.setText("5");
-                firstNumber = false;
-            } else if (!firstPartOfNumber && !firstNumber) {
-                number2 = textField.getText();
-                number2 = number2 + "5";
-                textField.setText(number2);
-            }
+        if(e.getSource() == divButton){
+            num1 = Double.parseDouble(textField.getText());
+            operator = '/';
+            textField.setText("");
         }
-        if (e.getSource() == nubmerButtons[6]) {
-            if (firstPartOfNumber && firstNumber) {
-                textField.setText("6");
-                firstNumber = true;
-            } else if (!firstPartOfNumber && firstNumber) {
-                number1 = textField.getText();
-                number1 = number1 + "6";
-                textField.setText(number1);
-            } else if (firstPartOfNumber && !firstNumber) {
-                textField.setText("6");
-                firstNumber = false;
-            } else if (!firstPartOfNumber && !firstNumber) {
-                number2 = textField.getText();
-                number2 = number2 + "6";
-                textField.setText(number2);
-            }
-        }
-        if (e.getSource() == nubmerButtons[7]) {
-            if (firstPartOfNumber && firstNumber) {
-                textField.setText("7");
-                firstNumber = true;
-            } else if (!firstPartOfNumber && firstNumber) {
-                number1 = textField.getText();
-                number1 = number1 + "7";
-                textField.setText(number1);
-            } else if (firstPartOfNumber && !firstNumber) {
-                textField.setText("7");
-                firstNumber = false;
-            } else if (!firstPartOfNumber && !firstNumber) {
-                number2 = textField.getText();
-                number2 = number2 + "7";
-                textField.setText(number2);
-            }
-        }
-
-        if (e.getSource() == nubmerButtons[8]) {
-            if (firstPartOfNumber && firstNumber) {
-                textField.setText("8");
-                firstNumber = true;
-            } else if (!firstPartOfNumber && firstNumber) {
-                number1 = textField.getText();
-                number1 = number1 + "8";
-                textField.setText(number1);
-            } else if (firstPartOfNumber && !firstNumber) {
-                textField.setText("8");
-                firstNumber = false;
-            } else if (!firstPartOfNumber && !firstNumber) {
-                number2 = textField.getText();
-                number2 = number2 + "8";
-                textField.setText(number2);
-            }
-        }
-
-        if (e.getSource() == nubmerButtons[9]) {
-            if (firstPartOfNumber && firstNumber) {
-                textField.setText("9");
-                firstNumber = true;
-            } else if (!firstPartOfNumber && firstNumber) {
-                number1 = textField.getText();
-                number1 = number1 + "9";
-                textField.setText(number1);
-            } else if (firstPartOfNumber && !firstNumber) {
-                textField.setText("9");
-                firstNumber = false;
-            } else if (!firstPartOfNumber && !firstNumber) {
-                number2 = textField.getText();
-                number2 = number2 + "9";
-                textField.setText(number2);
-            }
-        }
-
-        if (e.getSource() == nubmerButtons[0]) {
-            if (!firstPartOfNumber && firstNumber) {
-                number1 = textField.getText();
-                number1 = number1 + "0";
-                textField.setText(number1);
-            } else if (!firstPartOfNumb;.firstPartOfNumber && !firstNumber) {
-                number2 = textField.getText();
-                number2 = number2 + "0";
-                textField.setText(number2);
-            }
-        }
-
-        if (e.getSource() == equButton) {
-            number02 = Double.parseDouble(textField.getText());
-            if (e.getSource() == addButton) {
-                number01 = Double.parseDouble(textField.getText());
-                textField.setText(e.getActionCommand());
-                result = number01 + number02;
-            } else if (e.getSource() == subButton) {
-                number01 = Double.parseDouble(textField.getText());
-                textField.setText(e.getActionCommand());
-                result = number01 - number02;
-            } else if (e.getSource() == mulButton) {
-                number01 = Double.parseDouble(textField.getText());
-                textField.setText(e.getActionCommand());
-                result = number01 * number02;
-            } else if (e.getSource() == divButton) {
-                number01 = Double.parseDouble(textField.getText());
-                textField.setText(e.getActionCommand());
-                result = number01 / number02;
+        
+        if(e.getSource() == equButton){
+            num2 = Double.parseDouble(textField.getText());
+            switch (operator){
+                case '+': result = num1 + num2; break;
+                case '-': result = num1 - num2; break;
+                case '*': result = num1 * num2; break;
+                case '/': result = num1 / num2; break;
             }
             textField.setText(String.valueOf(result));
+            //num1 = result;
+        }
+        if(e.getSource() == clrButton){
+            textField.setText("");
+        }
+        if(e.getSource() == delButton && textField.getText().length() != 0){
+            String temp = textField.getText().substring(0, textField.getText().length() - 1);
+            textField.setText(temp);
         }
     }
 }
+
+
 
 
 
